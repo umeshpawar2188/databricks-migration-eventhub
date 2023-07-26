@@ -37,11 +37,22 @@ resource eventHubNamespace 'Microsoft.EventHub/namespaces@2021-11-01' = if(ctrlD
   }
 }
 
-resource eventHubNamespace_eventHubName 'Microsoft.EventHub/namespaces/eventhubs@2021-01-01-preview' = if(ctrlDeployEventHub) {
+resource eventHubNamespace_eventHubName 'Microsoft.EventHub/namespaces/eventhubs@2021-01-01-preview' = if(ctrlDeployEventHub && eventHubSku == "Standard") {
   parent: eventHubNamespace
   name: eventHubName
   properties: {
     messageRetentionInDays: 7
+    partitionCount: 1
+  }
+  dependsOn: [
+    eventHubNamespace
+  ]
+}
+else {
+  parent: eventHubNamespace
+  name: eventHubName
+  properties: {
+    messageRetentionInDays: 1
     partitionCount: 1
   }
   dependsOn: [
