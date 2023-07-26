@@ -41,7 +41,7 @@ resource eventHubNamespace_eventHubName 'Microsoft.EventHub/namespaces/eventhubs
   parent: eventHubNamespace
   name: eventHubName
   properties: {
-    messageRetentionInDays: 7
+    messageRetentionInDays: 2
     partitionCount: 1
   }
   dependsOn: [
